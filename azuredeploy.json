@@ -79,7 +79,7 @@
 "asetName": "dnsproxy-avail",
 "nsgName": "dnsproxy-nsg",
 "vnetName": "dnsproxy-vnet",
-"vnetAddressPrefix": "10.75.57/24",
+"vnetAddressPrefix": "10.75.0.0/24",
 "subNet1Name": "subnet1",
 "subNet1Prefix": "10.75.57.0/25",
 "storType": "Standard_LRS",
