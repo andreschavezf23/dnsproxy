@@ -81,7 +81,7 @@
 "vnetName": "dnsproxy-vnet",
 "vnetAddressPrefix": "10.75.57.0/24",
 "subNet1Name": "subnet1",
-"subNet1Prefix": "10.75.57.1/25",
+"subNet1Prefix": "10.75.57.0/25",
 "storType": "Standard_LRS",
 "location": "[parameters('location')]",
 "nicName": "[concat(parameters('vmName'), '-', 'nic')]",
