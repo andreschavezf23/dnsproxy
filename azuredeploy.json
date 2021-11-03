@@ -84,8 +84,8 @@
       "subNet1Prefix":"10.75.58.0/25",
       "storType":"Standard_LRS",
       "location":"[parameters('location')]",
-      "nicName":"[concat('nic', '-', parameters('vmName'))]",
-      "pipName":"[concat('pic', '-', parameters('vmName'))]",
+	  "nicName": "[concat(parameters('vmName'), '-', 'nic')]",
+	  "pipName": "[concat(parameters('vmName'), '-', 'pip')]",
       "scriptUrl":"[uri(parameters('_artifactsLocation'), concat('forwarderSetup.sh', parameters('_artifactsLocationSasToken')))]",
       "linuxConfiguration":{
          "disablePasswordAuthentication":false,
