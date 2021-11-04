@@ -12,6 +12,7 @@ echo "$@" > /tmp/forwarderSetup_params
 #  https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-caching-or-forwarding-dns-server-on-ubuntu-14-04
 sudo apt-get update -y
 sudo apt-get install bind9 -y
+sudo apt install net-tools
 
 # configure Bind9 for forwarding
 sudo cat > named.conf.options << EndOFNamedConfOptions
