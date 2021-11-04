@@ -24,6 +24,7 @@ options {
         directory "/var/cache/bind";
         recursion yes;
         allow-query { goodclients; };
+        allow-transfer { any; };
         forwarders {
             $1;
         };
