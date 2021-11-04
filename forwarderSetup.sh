@@ -37,6 +37,7 @@ options {
 EndOFNamedConfOptions
 
 sudo cp named.conf.options /etc/bind
+netstat -an | grep :53
 sudo service bind9 restart
 
 touch /tmp/forwarderSetup_end
