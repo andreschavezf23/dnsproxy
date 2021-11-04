@@ -157,7 +157,7 @@
             "networkProfile":{
                "networkInterfaces":[
                   {
-                     "id":"/subscriptions/62268361-c370-4e56-8211-e9211f65871a/resourceGroups/rg-dns-proxy/providers/Microsoft.Network/networkInterfaces/nic-dns-proxy-02"
+                     "id":"/subscriptions/d8d9ab88-c789-4a5e-8207-f55e698454d9/resourceGroups/rg-sup-prtl-qa-eastus-02/providers/Microsoft.Network/networkInterfaces/nic-dns-proxy"
                   }
                ]
             },
