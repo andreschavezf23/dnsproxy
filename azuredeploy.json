@@ -76,7 +76,7 @@
    },
    "variables":{
       "ubuntuOSVersion":"18.04-LTS",
-      "vnetAddressPrefix": "10.75.53.0/24",
+      "vnetAddressPrefix": "10.75.38.0/24",
       "asetName":"avail-dns-proxy", 
       "storType":"Standard_LRS",
       "location":"[parameters('location')]",
