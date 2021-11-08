@@ -76,10 +76,15 @@
    },
    "variables":{
       "ubuntuOSVersion":"18.04-LTS",
+	  "nsgName": "nsg-dns-proxy",
+	  "vnetName": "vnet-sup-prtl-qa-eastus-02",
+	  "subNet1Name": "subnet1",
       "vnetAddressPrefix": "10.75.38.0/24",
       "asetName":"avail-dns-proxy", 
       "storType":"Standard_LRS",
       "location":"[parameters('location')]",
+      "nicName": "[concat(parameters('vmName'), '-', 'nic')]",
+      "pipName": "[concat(parameters('vmName'), '-', 'pip')]",
       "scriptUrl":"[uri(parameters('_artifactsLocation'), concat('forwarderSetup.sh', parameters('_artifactsLocationSasToken')))]",
       "linuxConfiguration":{
          "disablePasswordAuthentication":false,
@@ -119,6 +124,37 @@
             "platformUpdateDomainCount":2
          }
       },
+      {
+      "type": "Microsoft.Network/networkInterfaces",
+      "comments": "A single network interface on each DNS server",
+      "name": "[variables('nicName')]",
+      "apiVersion": "2020-05-01",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('pipName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks/', variables('vnetName'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
+      ],
+      "properties": {
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+        },
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('pipName'))]"
+              },
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnet1Name'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
       {
          "type":"Microsoft.Compute/virtualMachines",
          "comments":"A stock Ubuntu server, a VM extension will add the DNS server to it later",
