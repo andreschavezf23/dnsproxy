@@ -228,7 +228,7 @@
             "networkProfile":{
                "networkInterfaces":[
                   {
-                     "id":"/subscriptions/d8d9ab88-c789-4a5e-8207-f55e698454d9/resourceGroups/rg-sup-prtl-qa-eastus-02/providers/Microsoft.Network/networkInterfaces/nic-dns-proxy"
+                     "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
                   }
                ]
             },
