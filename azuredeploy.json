@@ -76,15 +76,10 @@
    },
    "variables":{
       "ubuntuOSVersion":"18.04-LTS",
-      "nsgName":"nsg-sup-prtl-qa-eastus-02",
-      "vnetName":"vnet-sup-prtl-qa-eastus-02",
-      "subNet1Name":"subnet1",
       "vnetAddressPrefix":"10.75.32.0/19",
       "asetName":"avail-dns-proxy",
       "storType":"Standard_LRS",
       "location":"[parameters('location')]",
-      "nicName":"[concat(parameters('vmName'), '-', 'nic')]",
-      "pipName":"[concat(parameters('vmName'), '-', 'pip')]",
       "scriptUrl":"[uri(parameters('_artifactsLocation'), concat('forwarderSetup.sh', parameters('_artifactsLocationSasToken')))]",
       "linuxConfiguration":{
          "disablePasswordAuthentication":false,
@@ -125,72 +120,6 @@
          }
       },
       {
-         "type":"Microsoft.Network/networkSecurityGroups",
-         "comments":"An NSG to prevent inbound traffic other than SSH, set sourceAddressPrefix to restrict access further or block all together (or remove the public ip) and ssh in from another vm",
-         "name":"[variables('nsgName')]",
-         "apiVersion":"2020-05-01",
-         "location":"[variables('location')]",
-         "properties":{
-            "securityRules":[
-               {
-                  "name":"allow_ssh_in",
-                  "properties":{
-                     "description":"The only thing allowed is SSH",
-                     "protocol":"Tcp",
-                     "sourcePortRange":"*",
-                     "destinationPortRange":"22",
-                     "sourceAddressPrefix":"*",
-                     "destinationAddressPrefix":"*",
-                     "access":"Allow",
-                     "priority":100,
-                     "direction":"Inbound"
-                  }
-               }
-            ]
-         }
-      },
-      {
-         "type":"Microsoft.Network/publicIPAddresses",
-         "comments":"A public IP to allow us to SSH into the VM, not recommended for production DNS servers",
-         "name":"[variables('pipName')]",
-         "apiVersion":"2020-05-01",
-         "location":"[variables('location')]",
-         "properties":{
-            "publicIPAllocationMethod":"Dynamic"
-         }
-      },
-      {
-         "type":"Microsoft.Network/networkInterfaces",
-         "comments":"A single network interface on each DNS server",
-         "name":"[variables('nicName')]",
-         "apiVersion":"2020-05-01",
-         "location":"[variables('location')]",
-         "dependsOn":[
-            "[resourceId('Microsoft.Network/publicIPAddresses/', variables('pipName'))]",
-            "[resourceId('/subscriptions/d8d9ab88-c789-4a5e-8207-f55e698454d9/resourceGroups/rg-sup-prtl-qa-eastus-02/providers/Microsoft.Network/virtualNetworks/vnet-sup-prtl-qa-eastus-02')]",
-            "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
-         ],
-         "properties":{
-            "networkSecurityGroup":{
-               "id":"[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
-            },
-            "ipConfigurations":[
-               {
-                  "name":"ipconfig1",
-                  "properties":{
-                     "privateIPAllocationMethod":"Dynamic",
-                     "publicIPAddress":{
-                        "id":"[resourceId('Microsoft.Network/publicIPAddresses',variables('pipName'))]"
-                     },
-                     "subnet":{
-                        "id":"[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnet1Name'))]"
-                     }
-                  }
-               }
-            ]
-         }
-      },
-      {
          "type":"Microsoft.Compute/virtualMachines",
          "comments":"A stock Ubuntu server, a VM extension will add the DNS server to it later",
          "name":"[parameters('vmName')]",
@@ -228,7 +157,7 @@
             "networkProfile":{
                "networkInterfaces":[
                   {
-                     "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+                     "id": "/subscriptions/d8d9ab88-c789-4a5e-8207-f55e698454d9/resourceGroups/rg-sup-prtl-qa-eastus-02/providers/Microsoft.Network/networkInterfaces/dns-proxy-interface"
                   }
                ]
             },
