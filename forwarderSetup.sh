@@ -32,7 +32,7 @@ options {
         forward only;
         dnssec-validation no; # needed for private dns zones
         auth-nxdomain no;    # conform to RFC1035
-        listen-on-v6 { any; };
+        listen-on { any; };
 };
 EndOFNamedConfOptions
 
