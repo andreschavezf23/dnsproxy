@@ -76,7 +76,7 @@
    },
    "variables":{
       "ubuntuOSVersion":"18.04-LTS",
-      "nsgName":"nsg-dns-proxy",
+      "nsgName":"nsg-sup-prtl-qa-eastus-02",
       "vnetName":"vnet-sup-prtl-qa-eastus-02",
       "subNet1Name":"subnet1",
       "vnetAddressPrefix":"10.75.32.0/19",
@@ -122,6 +122,31 @@
          "properties":{
             "platformFaultDomainCount":2,
             "platformUpdateDomainCount":2
+         }
+      },
+      {
+         "type":"Microsoft.Network/networkSecurityGroups",
+         "comments":"An NSG to prevent inbound traffic other than SSH, set sourceAddressPrefix to restrict access further or block all together (or remove the public ip) and ssh in from another vm",
+         "name":"[variables('nsgName')]",
+         "apiVersion":"2020-05-01",
+         "location":"[variables('location')]",
+         "properties":{
+            "securityRules":[
+               {
+                  "name":"allow_ssh_in",
+                  "properties":{
+                     "description":"The only thing allowed is SSH",
+                     "protocol":"Tcp",
+                     "sourcePortRange":"*",
+                     "destinationPortRange":"22",
+                     "sourceAddressPrefix":"*",
+                     "destinationAddressPrefix":"*",
+                     "access":"Allow",
+                     "priority":100,
+                     "direction":"Inbound"
+                  }
+               }
+            ]
          }
       },
       {
