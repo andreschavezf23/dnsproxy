@@ -11,7 +11,7 @@ echo "$@" > /tmp/forwarderSetup_params
 #  Install Bind9
 #  https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-caching-or-forwarding-dns-server-on-ubuntu-14-04
 sudo apt-get update -y
-sudo apt-get install bind9 bind9utils bind9-doc
+sudo apt-get install bind9 -y
 
 # configure Bind9 for forwarding
 sudo cat > named.conf.options << EndOFNamedConfOptions
@@ -22,16 +22,15 @@ acl goodclients {
 };
 options {
         directory "/var/cache/bind";
+        recursion yes;
         allow-query { goodclients; };
-        allow-transfer { goodclients; };
-        allow-recursion { goodclients; };
         forwarders {
             $1;
         };
         forward only;
-        dnssec-validation auto; # needed for private dns zones
+        dnssec-validation no; # needed for private dns zones
         auth-nxdomain no;    # conform to RFC1035
-        listen-on-v6 { any; };
+        listen-on { any; };
 };
 EndOFNamedConfOptions
 
