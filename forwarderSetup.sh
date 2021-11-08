@@ -11,8 +11,7 @@ echo "$@" > /tmp/forwarderSetup_params
 #  Install Bind9
 #  https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-caching-or-forwarding-dns-server-on-ubuntu-14-04
 sudo apt-get update -y
-sudo apt-get install bind9 -y
-sudo apt-get install net-tools
+sudo apt-get install bind9 bind9utils bind9-doc
 
 # configure Bind9 for forwarding
 sudo cat > named.conf.options << EndOFNamedConfOptions
@@ -31,7 +30,7 @@ options {
         forward only;
         dnssec-validation no; # needed for private dns zones
         auth-nxdomain no;    # conform to RFC1035
-        listen-on port 53 { any; };
+        listen-on-v6 { none; };
 };
 EndOFNamedConfOptions
 
