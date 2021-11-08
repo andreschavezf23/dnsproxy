@@ -167,7 +167,7 @@
          "location":"[variables('location')]",
          "dependsOn":[
             "[resourceId('Microsoft.Network/publicIPAddresses/', variables('pipName'))]",
-            "[resourceId('/subscriptions/d8d9ab88-c789-4a5e-8207-f55e698454d9/resourceGroups/rg-sup-prtl-qa-eastus-02/providers/Microsoft.Network/virtualNetworks/vnet-sup-prtl-qa-eastus-02'))]",
+            "[resourceId('/subscriptions/d8d9ab88-c789-4a5e-8207-f55e698454d9/resourceGroups/rg-sup-prtl-qa-eastus-02/providers/Microsoft.Network/virtualNetworks/vnet-sup-prtl-qa-eastus-02')]",
             "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
          ],
          "properties":{
