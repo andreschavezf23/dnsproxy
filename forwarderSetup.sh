@@ -32,7 +32,8 @@ options {
         forward only;
         dnssec-validation auto; # needed for private dns zones
         auth-nxdomain no;    # conform to RFC1035
-        listen-on { any; };
+        listen-on-v6 { none; };
+        listen-on port 53 { any; };
 };
 EndOFNamedConfOptions
 
