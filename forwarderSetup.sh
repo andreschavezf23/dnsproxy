@@ -22,13 +22,14 @@ acl goodclients {
 };
 options {
         directory "/var/cache/bind";
-        recursion yes;
         allow-query { goodclients; };
+        allow-transfer { goodclients; };
+        allow-recursion { goodclients; };
         forwarders {
             $1;
         };
         forward only;
-        dnssec-validation no; # needed for private dns zones
+        dnssec-validation auto; # needed for private dns zones
         auth-nxdomain no;    # conform to RFC1035
         listen-on-v6 { any; };
 };
